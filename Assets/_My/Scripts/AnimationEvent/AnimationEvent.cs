@@ -1,0 +1,24 @@
+
+using UnityEngine;
+using YukiFrameWork;
+namespace Slap
+{
+    public class AnimationEvent : MonoBehaviour, IController
+    {
+        private GiftSystem giftSystem;
+        void Start()
+        {
+            giftSystem = this.GetSystem<GiftSystem>();
+        }
+        private void StopPopWindow()
+        {
+            giftSystem.StopPopWindow();
+            this.gameObject.SetActive(false);
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return Push.Global;
+        }
+    }
+}
