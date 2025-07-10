@@ -43,6 +43,7 @@ namespace Slap
         MainMenu = 0,
         WaitStart,
         Gaming,
+        
         End
     }
 }

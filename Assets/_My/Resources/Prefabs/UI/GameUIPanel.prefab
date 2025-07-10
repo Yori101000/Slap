@@ -2460,7 +2460,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.0012054, y: -111.45538}
+  m_AnchoredPosition: {x: -0.00354, y: -111.46002}
   m_SizeDelta: {x: 809.6, y: 222.911}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3764268812771492104
@@ -2575,8 +2575,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 248.17, y: 103.3}
-  m_SizeDelta: {x: 347.21, y: 16.081}
+  m_AnchoredPosition: {x: 253.93, y: 103.3}
+  m_SizeDelta: {x: 358.73, y: 16.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4419657675683752348
 MonoBehaviour:
@@ -4441,7 +4441,7 @@ MonoBehaviour:
     scriptNamespace: Slap.UI
     createName: Yuki
     createEmail: 1274672030@qq.com
-    systemNowTime: 2025/7/2 15:00:28
+    systemNowTime: 2025/7/9 13:41:52
     description: "\u8FD9\u662F\u4E00\u4E2A\u6846\u67B6\u5DE5\u5177\u521B\u5EFA\u7684\u811A\u672C"
     onLoading: 0
     isFolderCreateScripts: 1
@@ -4692,8 +4692,8 @@ MonoBehaviour:
     - TMPro.TextMeshProUGUI
     target: {fileID: 3949785115467441989}
     fieldName: Txt_RightChargeProgress
-  Txt_LeftWinCounter: {fileID: 1765550125522730918}
-  Txt_RightWinCounter: {fileID: 1505584053501928333}
+  Txt_LeftHealth: {fileID: 1765550125522730918}
+  Txt_RightHealth: {fileID: 1505584053501928333}
   Pnt_LeftTapRank: {fileID: 6236894574397601303}
   Pnt_RightTapRank: {fileID: 7610513351154675908}
   Pnt_LeftViewer: {fileID: 6303538818973849078}
@@ -4997,8 +4997,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -259.68, y: 103.29545}
-  m_SizeDelta: {x: 370.25, y: 16.0882}
+  m_AnchoredPosition: {x: -253.92, y: 103.29545}
+  m_SizeDelta: {x: 358.74, y: 16.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5839633277472942793
 MonoBehaviour:
@@ -6353,7 +6353,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.5157, y: 62}
+  m_AnchoredPosition: {x: 0, y: 62}
   m_SizeDelta: {x: 866.5815, y: 66.5184}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &327541444008292756

@@ -15,23 +15,38 @@ namespace Slap.UI
 {
 	public partial class PopPanel : BasePanel
 	{
-
 		//弹出弹幕
 		public void PopWindow(PlayerData playerData, GiftPopData giftPopData)
 		{
-			PopedWindow.SetActive(true);
-			Image playerIcon = PopedWindow.gameObject.Find("玩家头像").GetComponent<Image>();
-			Image giftIcon = PopedWindow.gameObject.Find("礼物").GetComponent<Image>();
-			TextMeshProUGUI counter = PopedWindow.gameObject.Find("数量").GetComponent<TextMeshProUGUI>();
+	
+			Image playerIcon;
+			Image giftIcon;
+			TextMeshProUGUI counter;
+			Animator animator;
 
+			if (playerData.userCamp == 1)
+			{
+				PopedLeftWindow.SetActive(true);
+				playerIcon = PopedLeftWindow.gameObject.Find("玩家头像").GetComponent<Image>();
+				giftIcon = PopedLeftWindow.gameObject.Find("礼物").GetComponent<Image>();
+				counter = PopedLeftWindow.gameObject.Find("数量").GetComponent<TextMeshProUGUI>();
+				animator = PopedLeftWindow.gameObject.GetComponent<Animator>();
+				animator.Play("PopLeftWindow");
+			}
+			else
+			{
+				PopedRightWindow.SetActive(true);
+				playerIcon = PopedRightWindow.gameObject.Find("玩家头像").GetComponent<Image>();
+				giftIcon = PopedRightWindow.gameObject.Find("礼物").GetComponent<Image>();
+				counter = PopedRightWindow.gameObject.Find("数量").GetComponent<TextMeshProUGUI>();
+				animator = PopedRightWindow.gameObject.GetComponent<Animator>();
+				animator.Play("PopRightWindow");
+			}
 			playerIcon.sprite = playerData.icon;
 			giftIcon.sprite = giftPopData.giftIcon;
 			counter.text = $"×{giftPopData.number}";
-			
 
 		}
-
-
 	}
 	public enum PopType
 	{

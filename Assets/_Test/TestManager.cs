@@ -21,12 +21,13 @@ namespace Slap.Test
         //用户输入
         public TMP_InputField ipf_user;
 
-        //用户创建和选择
+        //用户设置
         public TMP_InputField ipf_userCreate;
+        public TMP_InputField ipf_userWinPoint;
         public TMP_InputField ipf_userSelect;
         #endregion
 
-        PlayerDataSystem playerDataSystem;
+        GlobalDataSystem globalDataSystem;
         GiftSystem giftSystem;
         public PlayerData curPlayer;
 
@@ -42,11 +43,11 @@ namespace Slap.Test
         {
             ipf_user.onSubmit.AddListener(OnUserInput);
             ipf_userCreate.onSubmit.AddListener(OnUserCreate);
+            ipf_userWinPoint.onSubmit.AddListener(OnUserSetWinPoint);
             ipf_userSelect.onSubmit.AddListener(OnUserSelect);
-            playerDataSystem = this.GetSystem<PlayerDataSystem>();
+            globalDataSystem = this.GetSystem<GlobalDataSystem>();
             giftSystem = this.GetSystem<GiftSystem>();
         }
-
 
         private void OnUserInput(string value)
         {
@@ -62,7 +63,7 @@ namespace Slap.Test
             if (Regex.IsMatch(value, @"^1+$"))
             {
                 // 进行分配
-                if (playerDataSystem.AllotPlayerToCamp(curPlayer, 1))
+                if (globalDataSystem.AllotPlayerToCamp(curPlayer, 1))
                     Debug.Log($"玩家 {curPlayer.userName} 分配成功，阵营为红色");
                 else
                     Debug.LogWarning($"玩家 {curPlayer.userName} 创建失败");
@@ -70,7 +71,7 @@ namespace Slap.Test
             if (Regex.IsMatch(value, @"^2+$"))
             {
                 // 进行分配
-                if (playerDataSystem.AllotPlayerToCamp(curPlayer, 2))
+                if (globalDataSystem.AllotPlayerToCamp(curPlayer, 2))
                     Debug.Log($"玩家 {curPlayer.userName} 分配成功，阵营为蓝色");
                 else
                     Debug.LogWarning($"玩家 {curPlayer.userName} 分配失败");
@@ -79,10 +80,23 @@ namespace Slap.Test
             {
                 if (curPlayer.userCamp == 0)
                     Debug.Log($"玩家 {curPlayer.userName} 阵营为空，请重新分配");
-                giftSystem.HandleGift(curPlayer, new EffectData { baseScore = 5, duration = 3 });
+                giftSystem.HandleLike(curPlayer, new EffectData { baseScore = 5, duration = 3 });
             }
         }
-        
+
+        private void OnUserSetWinPoint(string value)
+        {
+            if (int.TryParse(value, out int winPoint))
+            {
+                curPlayer.userWinPoint = winPoint;
+                Debug.Log($"用户 {curPlayer.userName} 目前有 {curPlayer.userWinPoint} 胜点");
+            }
+            else
+            {
+                Debug.LogWarning("请输入有效的整数作为胜点");
+            }
+        }
+
         private void OnUserCreate(string value)
         {
             if (value == "")
@@ -90,7 +104,7 @@ namespace Slap.Test
 
             PlayerData temp = new PlayerData { userName = value, userScore = 0 };
 
-            if (playerDataSystem.CreatePlayerData(temp))
+            if (globalDataSystem.CreatePlayerData(temp))
             {
                 curPlayer = temp;
                 Debug.Log($"玩家 {value} 创建成功");
@@ -106,7 +120,7 @@ namespace Slap.Test
 
             Debug.Log($"用户选择: {value}");
 
-            PlayerData temp = playerDataSystem.GetPlayerData(value);
+            PlayerData temp = globalDataSystem.GetPlayerData(value);
 
             if (temp != null)
             {

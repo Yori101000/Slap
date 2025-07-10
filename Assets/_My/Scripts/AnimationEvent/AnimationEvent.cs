@@ -10,9 +10,30 @@ namespace Slap
         {
             giftSystem = this.GetSystem<GiftSystem>();
         }
-        private void StopPopWindow()
+        private void StopLeftPopWindow()
         {
-            giftSystem.StopPopWindow();
+            giftSystem.StopPopWindow(1);
+            this.gameObject.SetActive(false);
+        }
+        private void StopRightPopWindow()
+        {
+            giftSystem.StopPopWindow(2);
+            this.gameObject.SetActive(false);
+        }
+        private void StopLeftGiftAnimation()
+        {
+            giftSystem.StopGiftAnimation(1);
+            this.gameObject.SetActive(false);
+
+        }
+        private void StopRightGiftAnimation()
+        {
+            giftSystem.StopGiftAnimation(2);
+            this.gameObject.SetActive(false);
+        }
+        private void StopFullScreenGiftAnimation()
+        {
+            giftSystem.StopFullScreenGiftAnimation();
             this.gameObject.SetActive(false);
         }
 

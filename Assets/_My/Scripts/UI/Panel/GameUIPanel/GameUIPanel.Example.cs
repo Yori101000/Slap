@@ -10,8 +10,8 @@ namespace Slap.UI
 {
 	public partial class GameUIPanel
 	{
-		[SerializeField]private TMPro.TextMeshProUGUI Txt_LeftWinCounter;
-		[SerializeField]private TMPro.TextMeshProUGUI Txt_RightWinCounter;
+		[SerializeField]private TMPro.TextMeshProUGUI Txt_LeftHealth;
+		[SerializeField]private TMPro.TextMeshProUGUI Txt_RightHealth;
 		[SerializeField]private UnityEngine.GameObject Pnt_LeftTapRank;
 		[SerializeField]private UnityEngine.GameObject Pnt_RightTapRank;
 		[SerializeField]private UnityEngine.GameObject Pnt_LeftViewer;

@@ -10,54 +10,102 @@ using YukiFrameWork.Machine;
 using YukiFrameWork.UI;
 using Slap.UI;
 using YukiFrameWork;
+// ...existing using...
+
 namespace Slap
 {
-	//管理游戏中全局
-	public class GlobalState : StateBehaviour
-	{
-		PlayerDataSystem playerDataSystem;
-		GiftSystem giftSystem;
-		public override async void OnEnter()
-		{
-			await SceneTool.LoadSceneAsync(ConstModel.GameSceneName);
+    public class GlobalState : StateBehaviour
+    {
+        GlobalDataSystem globalDataSystem;
+        GiftSystem giftSystem;
 
+        public override async void OnEnter()
+        {
+            await SceneTool.LoadSceneAsync(ConstModel.GameSceneName);
 
-			//打开有关UI面板
-			UIKit.OpenPanel<BackGroundPanel>();
-			UIKit.OpenPanel<PropPanel>();
+            // 打开UI面板
+            UIKit.OpenPanel<BackGroundPanel>();
+            UIKit.OpenPanel<PropPanel>();
+            UIKit.OpenPanel<CharacterPanel>();
+            UIKit.OpenPanel<GameUIPanel>();
+            var explainPanel = UIKit.OpenPanel<ExplainPanel>();
+            UIKit.OpenPanel<AnimationPanel>();
+            UIKit.OpenPanel<PopPanel>();
+            UIKit.OpenPanel<TestPanel>();
 
-			UIKit.OpenPanel<CharacterPanel>();
-			UIKit.OpenPanel<GameUIPanel>();
-			var explainPanel = UIKit.OpenPanel<ExplainPanel>();
+            explainPanel.OnClickClose(() => UIKit.ClosePanel<ExplainPanel>());
 
-			UIKit.OpenPanel<AnimationPanel>();
-			UIKit.OpenPanel<PopPanel>();
+            // 系统初始化
+            globalDataSystem = this.GetSystem<GlobalDataSystem>();
+            giftSystem = this.GetSystem<GiftSystem>();
 
-			UIKit.OpenPanel<TestPanel>();
+            globalDataSystem.Start();
+            giftSystem.Start();
 
-			explainPanel.OnClickClose(() => UIKit.ClosePanel<ExplainPanel>());
+            // 事件绑定
+            globalDataSystem.OnLeftRoundWin += () => OnRoundWin(1);
+            globalDataSystem.OnRightRoundWin += () => OnRoundWin(2);
+            globalDataSystem.OnLeftWin += () => OnGameWin(1);
+            globalDataSystem.OnRightWin += () => OnGameWin(2);
 
-			//系统初始化
-			playerDataSystem = this.GetSystem<PlayerDataSystem>();
-			giftSystem = this.GetSystem<GiftSystem>();
+            UIKit.ClosePanel<LoadingPanel>();
+        }
 
-			playerDataSystem.Start();
-			giftSystem.Start();
+        public override void OnUpdate()
+        {
+            globalDataSystem?.Update();
+        }
 
-			//在所有东西加载完毕后，关闭加载面板
-			UIKit.ClosePanel<LoadingPanel>();
-		}
-		public override void OnUpdate()
-		{
+        public override void OnExit()
+        {
+            // 取消事件绑定
+            globalDataSystem.OnLeftRoundWin -= () => OnRoundWin(1);
+            globalDataSystem.OnRightRoundWin -= () => OnRoundWin(2);
+            globalDataSystem.OnLeftWin -= () => OnGameWin(1);
+            globalDataSystem.OnRightWin -= () => OnGameWin(2);
 
-		}
-		public override void OnExit()
-		{
-			//结束系统逻辑更新
-			playerDataSystem.End();
-			giftSystem.End();
-			
-		}
+            globalDataSystem.End();
+            giftSystem.End();
+        }
 
+        /// <summary>
+        /// 回合胜利结算
+        /// </summary>
+        private void OnRoundWin(int camp)
+        {
+            MonoHelper.Instance.StopAllCoroutines();
+            giftSystem.Clear(); // 集中销毁所有道具
+
+            // 播放动画(在动画过程中减少血量)
+
+            //减少血量
+            if (camp == 1)
+                globalDataSystem.ReduceHealth(2);
+            else
+                globalDataSystem.ReduceHealth(1);
+                
+
+            // 重置阵容数据
+            globalDataSystem.InitRoundData();
+            UIKit.GetPanel<GameUIPanel>().ResetCharge();
+        }
+
+        /// <summary>
+        /// 游戏胜利结算
+        /// </summary>
+        private void OnGameWin(int camp)
+        {
+            MonoHelper.Instance.StopAllCoroutines();
+            giftSystem.Clear(); // 集中销毁所有道具
+
+            // 播放OK动画
+
+            if (camp == 1)
+                globalDataSystem.ReduceHealth(2);
+            else
+                globalDataSystem.ReduceHealth(1);
+
+            SetInt("GameState", (int)GameState.End);
+        }
     }
 }

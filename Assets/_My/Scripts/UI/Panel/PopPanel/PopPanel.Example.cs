@@ -10,6 +10,7 @@ namespace Slap.UI
 {
 	public partial class PopPanel
 	{
-		[SerializeField]private UnityEngine.GameObject PopedWindow;
+		[SerializeField]private UnityEngine.GameObject PopedRightWindow;
+		[SerializeField]private UnityEngine.GameObject PopedLeftWindow;
 	}
 }

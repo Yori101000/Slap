@@ -13,7 +13,11 @@ namespace Slap
 {
 	public class EndState : StateBehaviour
 	{
-	
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			Debug.Log("进入结束状态"); 
+        }
 
 	}
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22aa4b760cf7414bb2626fb352c2bc2, type: 3}
   m_Name: Game
   m_EditorClassIdentifier: 
-  viewPosition: {x: -48.8, y: -9.6, z: 0}
-  viewScale: {x: 0.57175326, y: 0.57175326, z: 1}
+  viewPosition: {x: -95.2, y: -76.8, z: 0}
+  viewScale: {x: 0.65751624, y: 0.65751624, z: 1}
   runtime_GUID: 
   all_runtime_States:
     list:
@@ -119,8 +119,8 @@ MonoBehaviour:
         upMachineName: Base Layer
         position:
           serializedVersion: 2
-          x: 600
-          y: 300
+          x: 660
+          y: 260
           width: 200
           height: 40
       - parentStateMachineName: Game

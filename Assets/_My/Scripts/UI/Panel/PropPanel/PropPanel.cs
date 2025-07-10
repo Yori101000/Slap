@@ -10,29 +10,28 @@ using YukiFrameWork.UI;
 using UnityEngine;
 using YukiFrameWork;
 using UnityEngine.UI;
+using XFABManager;
 namespace Slap.UI
 {
 	public partial class PropPanel : BasePanel
 	{
-		public override void OnInit()
+		public GameObject SpawnProp(PlayerData playerData, GiftPropData propData)
 		{
-			base.OnInit();
-		}
-		public override void OnEnter(params object[] param)
-		{
-			base.OnEnter(param);
-		}
-		public override void OnPause()
-		{
-			base.OnPause();
-		}
-		public override void OnResume()
-		{
-			base.OnResume();
-		}
-		public override void OnExit()
-		{
-			base.OnExit();
+			var prop = GameObjectLoader.Load(propData.PropPre, transform);
+
+			Animator animator;
+
+			if (playerData.userCamp == 1)
+			{
+				animator = prop.GetComponent<Animator>();
+				animator.Play("Left");
+			}
+			else
+			{
+				animator = prop.GetComponent<Animator>();
+				animator.Play("Right");
+			}
+			return prop;
 		}
 
 	}

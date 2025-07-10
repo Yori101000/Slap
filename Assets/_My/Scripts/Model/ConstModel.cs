@@ -17,8 +17,10 @@ namespace Slap
 
         public const string DefaultStateMachineCoreName = "Game"; //默认状态机核心名称
         public const string DefaultStateMachineCorePath = "Configs/Game";
-        
+
         public const string GameSceneName = "Game"; //游戏场景名称
+
+        public const int MaxLinkViewer = 16;
 
 
     }

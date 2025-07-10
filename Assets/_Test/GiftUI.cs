@@ -14,23 +14,15 @@ namespace Slap.Test
         //基础信息
         public GiftsConfig config;
 
-        //面板
-        //弹窗面板
-        private PopPanel popPanel;
-        //道具面板
-        private PropPanel propPanel;
-        //动画面板
-        private AnimationPanel animationPanel;
-
         //系统
         private GiftSystem giftSystem;
-        private PlayerDataSystem playerDataSystem;
+        private GlobalDataSystem globalDataSystem;
 
 
         void Start()
         {
             giftSystem = this.GetSystem<GiftSystem>();
-            playerDataSystem = this.GetSystem<PlayerDataSystem>();
+            globalDataSystem = this.GetSystem<GlobalDataSystem>();
 
             gift.onClick.AddListener(() =>
             {
@@ -51,77 +43,86 @@ namespace Slap.Test
 
         private void OnClickBtn0()
         {
-            //检查玩家
-            if (TestManager.Instance.curPlayer.userName == string.Empty)
-            {
-                Debug.LogWarning("当前玩家为空");
-                return;
-            }
-            if (TestManager.Instance.curPlayer.userCamp == 0)
-                playerDataSystem.AllotPlayerToCamp(TestManager.Instance.curPlayer, Random.Range(1, 3));
+            if (!CheckPlayer()) return;
 
             Debug.Log($"{gift.name} + 按钮1被点击了");
+            giftItemPrefab.SetActive(false);
 
-            //弹窗设置
-            if (config.popDatas[0].giftIcon != null)
-            {
-                giftItemPrefab.SetActive(false);
-                giftSystem.PopWindow(TestManager.Instance.curPlayer, config.popDatas[0]);
-            }
-
-
-            //TODO 加分
-            giftSystem.HandleGift(TestManager.Instance.curPlayer, config.effectDatas[0]);
-
+            giftSystem.HandleGift(TestManager.Instance.curPlayer, config, 0);
 
         }
 
         private void OnClickBtn1()
         {
+            if (!CheckPlayer()) return;
+
             Debug.Log($"{gift.name} + 按钮2被点击了");
             giftItemPrefab.SetActive(false);
-            giftSystem.PopWindow(TestManager.Instance.curPlayer, config.popDatas[1]);
+
+            giftSystem.HandleGift(TestManager.Instance.curPlayer, config, 1);
 
         }
         private void OnClickBtn2()
         {
+            if (!CheckPlayer()) return;
+
             Debug.Log($"{gift.name} + 按钮3被点击了");
             giftItemPrefab.SetActive(false);
-            giftSystem.PopWindow(TestManager.Instance.curPlayer, config.popDatas[2]);
+
+            giftSystem.HandleGift(TestManager.Instance.curPlayer, config, 2);
 
         }
         private void OnClickBtn3()
         {
+            if (!CheckPlayer()) return;
+
             Debug.Log($"{gift.name} + 按钮4被点击了");
             giftItemPrefab.SetActive(false);
-            giftSystem.PopWindow(TestManager.Instance.curPlayer, config.popDatas[3]);
+
+            giftSystem.HandleGift(TestManager.Instance.curPlayer, config, 3);
 
         }
         private void OnClickBtn4()
         {
+             if (!CheckPlayer()) return;
+
             Debug.Log($"{gift.name} + 按钮5被点击了");
             giftItemPrefab.SetActive(false);
-            giftSystem.PopWindow(TestManager.Instance.curPlayer, config.popDatas[4]);
+
+            giftSystem.HandleGift(TestManager.Instance.curPlayer, config, 4);
 
         }
         private void OnClickBtn5()
         {
+            if (!CheckPlayer()) return;
+
             Debug.Log($"{gift.name} + 按钮6被点击了");
             giftItemPrefab.SetActive(false);
-            giftSystem.PopWindow(TestManager.Instance.curPlayer, config.popDatas[5]);
 
+            giftSystem.HandleGift(TestManager.Instance.curPlayer, config, 5);
         }
         private void OnClickBtn6()
         {
+            if (!CheckPlayer()) return;
+
             Debug.Log($"{gift.name} + 按钮7被点击了");
             giftItemPrefab.SetActive(false);
-            giftSystem.PopWindow(TestManager.Instance.curPlayer, config.popDatas[6]);
 
+            giftSystem.HandleGift(TestManager.Instance.curPlayer, config, 6);
         }
-
         #endregion
 
-
+        private bool CheckPlayer()
+        {
+            if (TestManager.Instance.curPlayer.userName == string.Empty)
+            {
+                Debug.LogWarning("当前玩家为空");
+                return false;
+            }
+            if (TestManager.Instance.curPlayer.userCamp == 0)
+                globalDataSystem.AllotPlayerToCamp(TestManager.Instance.curPlayer, Random.Range(1, 3));
+            return true; 
+        }
 
 
         public IArchitecture GetArchitecture()

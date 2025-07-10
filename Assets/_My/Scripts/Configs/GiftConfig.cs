@@ -24,7 +24,6 @@ namespace Slap
         public GiftPropData[] propDatas = new GiftPropData[7];
         public GiftAnimationData[] animtionDatas = new GiftAnimationData[7];
         public EffectData[] effectDatas = new EffectData[7];
-
     }
 
     [System.Serializable]
@@ -42,23 +41,34 @@ namespace Slap
     [Serializable]
     public class GiftPropData
     {
-        //位置
-        public Vector2 pos;
+        //位置在道具动画中处理
         //道具预制体
         public GameObject PropPre;
+        public int duration;
     }
 
-    //TODO 填充动画数据
+    //填充动画数据
     [Serializable]
     public class GiftAnimationData
     {
+        public string AnimationName;
+        public AnimationType type;
 
+        public enum AnimationType
+        {
+            windowed,
+            Full
+        }
     }
     [Serializable]
     public class EffectData
     {
         public int baseScore;
         public int duration;
+        /// <summary>
+        /// 礼物的积分
+        /// </summary>
+        public int point;
     }
     
 }

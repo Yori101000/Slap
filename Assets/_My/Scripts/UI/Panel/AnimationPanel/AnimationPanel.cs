@@ -6,33 +6,33 @@
 /// -  (C) Copyright 2008 - 2025
 /// -  All Rights Reserved.
 ///=====================================================
-using YukiFrameWork.UI;
 using UnityEngine;
-using YukiFrameWork;
-using UnityEngine.UI;
+using YukiFrameWork.UI;
 namespace Slap.UI
 {
 	public partial class AnimationPanel : BasePanel
 	{
-		public override void OnInit()
+		
+		public void PlayAnimation(PlayerData playerData, GiftAnimationData giftAnimationData)
 		{
-			base.OnInit();
-		}
-		public override void OnEnter(params object[] param)
-		{
-			base.OnEnter(param);
-		}
-		public override void OnPause()
-		{
-			base.OnPause();
-		}
-		public override void OnResume()
-		{
-			base.OnResume();
-		}
-		public override void OnExit()
-		{
-			base.OnExit();
+			
+			if (giftAnimationData.type == GiftAnimationData.AnimationType.windowed)
+			{
+				if (playerData.userCamp == 1)
+				{
+					LeftAnimation.gameObject.SetActive(true);
+					LeftAnimation.Play(giftAnimationData.AnimationName);
+				}
+				else
+				{
+					RightAnimation.gameObject.SetActive(true);
+					RightAnimation.Play(giftAnimationData.AnimationName);
+				}
+			}
+			else
+			{
+				FullScreenAnimation.Play(giftAnimationData.AnimationName);
+			}
 		}
 
 	}

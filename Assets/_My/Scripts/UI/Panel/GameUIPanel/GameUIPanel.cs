@@ -28,17 +28,7 @@ namespace Slap.UI
 
 		#endregion
 
-		#region 临时数据
 
-		//最多每秒推进进度（因为使用slider左减右加，所以需要 / 2）
-		private float maxPushPerSecond = 1f / 2;
-
-		//气势
-		private int MaxMomentumDiff = 1000;
-		private int leftMomentum;
-		private int rightMomentum;
-
-		#endregion
 
 		public override void OnEnter(params object[] param)
 		{
@@ -50,19 +40,8 @@ namespace Slap.UI
 		}
 
 
-		public void UpdateUI(List<PlayerData> list_PlayerData)
-		{
-			//TODO 上方更新
-
-
-			//观众更新
-
-
-			//进度条更新
-
-		}
-
-		public void UpdateLeftViewer(List<PlayerData> list_PlayerData)
+		//更新左方阵营UI
+		public void UpdateLeftViewerUI(List<PlayerData> list_PlayerData)
 		{
 			//更新顶部观众
 			int length = list_PlayerData.Count > leftTopViewerIcon.Length ? leftTopViewerIcon.Length : list_PlayerData.Count;
@@ -72,15 +51,22 @@ namespace Slap.UI
 				txt_LeftTopViewer[i].text = list_PlayerData[i].userName;
 			}
 
+
 			//TODO 更新观众详情
 
 
-			//更新气势
-			UpdateLeftMomentum(list_PlayerData);
+		}
+
+		//更新点赞观众
+		public void UpdateLeftLikingViewer()
+		{
 
 		}
 
-		public void UpdateRightViewer(List<PlayerData> list_PlayerData)
+
+
+
+		public void UpdateRightViewerUI(List<PlayerData> list_PlayerData)
 		{
 			//更新顶部观众
 			int length = list_PlayerData.Count > rightTopViewerIcon.Length ? rightTopViewerIcon.Length : list_PlayerData.Count;
@@ -89,45 +75,40 @@ namespace Slap.UI
 				rightTopViewerIcon[i].sprite = list_PlayerData[i].icon;
 				txt_RightTopViewer[i].text = list_PlayerData[i].userName;
 			}
-			
-			//更新气势
-			UpdateRightMomentum(list_PlayerData);
 
 		}
 
-		public void UpdateLeftMomentum(List<PlayerData> list_PlayerData)
+		public void UpdateLeftMomentumUI(int totalMomentum) => Txt_LeftMomentum.text = totalMomentum.ToString();
+		public void UpdateRightMomentumUI(int totalMomentum) => Txt_RightMomentum.text = totalMomentum.ToString();
+
+		//更新积分池
+		public void UpdatePointPoolUI(int point) => Txt_PointPool.text = point.ToString();
+		public void UpdateLeftPointBarUI(float value) => Sdr_LeftPointBar.value = value;
+		public void UpdateRightPointBarUI(float value) => Sdr_RightPointBar.value = value;
+		public void UpdateWinPointUI(int leftWinPool, int rightWinPool)
 		{
-			var i = 0;
-			foreach (var playerData in list_PlayerData)
-				i += playerData.userScore;
-			Txt_LeftMomentum.text = i.ToString();
-			leftMomentum = i;
+			Txt_LeftWinPoint.text = leftWinPool.ToString();
+			Txt_RightWinPoint.text = rightWinPool.ToString();
+
 		}
-		public void UpdateRightMomentum(List<PlayerData> list_PlayerData)
+		public void UpdateChargeUI(float pushSpeed)
 		{
-			var i = 0;
-			foreach (var playerData in list_PlayerData)
-				i += playerData.userScore;
-			Txt_RightMomentum.text = i.ToString();
-			rightMomentum = i;
-		}
-
-	
-		
-
-		public void UpdateCharge()
-		{
-			//更新蓄力条
-			float momentumDiff = leftMomentum - rightMomentum;
-			float diffRatio = Mathf.Clamp(momentumDiff / MaxMomentumDiff, -1f, 1f);
-			float pushSpeed = diffRatio * maxPushPerSecond;
-
 			Sdr_ChargeBar.value += pushSpeed * Time.deltaTime;
 
 			//更新相关文本
 			Txt_LeftChargeProgress.text = $"{Sdr_ChargeBar.value * 100:F1}%";
 			Txt_RightChargeProgress.text = $"{(1 - Sdr_ChargeBar.value) * 100:F1}%";
-
 		}
+		public void UpdateLeftHealthUI(int health) => Txt_LeftHealth.text = health.ToString();
+		public void UpdateRightHealthUI(int health) => Txt_RightHealth.text = health.ToString();
+
+
+		public float GetChargeProcess() => Sdr_ChargeBar.value;
+		public float GetLeftPointProcess() => Sdr_LeftPointBar.value;
+		public float GetRightPointProcess() => Sdr_RightPointBar.value;
+
+		public void ResetCharge() => Sdr_ChargeBar.value = 0.5f;
+
 	}
+
 }
